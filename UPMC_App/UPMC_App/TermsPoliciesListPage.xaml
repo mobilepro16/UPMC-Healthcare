@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="UPMC_App.TermsPoliciesListPage"
+             Title="Terms &amp; Policies">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <x:Array x:Key="TermsList" Type="{x:Type x:String}">
+                <x:String>Terms &amp; Conditions</x:String>
+                <x:String>Privacy Policy</x:String>
+                <x:String>Nondiscrimination Notice</x:String>
+            </x:Array>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <ListView ItemsSource="{StaticResource TermsList}" SelectionMode="None" ItemTapped="ListView_ItemTapped">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextCell Text="{Binding}" TextColor="{StaticResource HeaderTextColor}"/>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </ContentPage.Content>
+</ContentPage>

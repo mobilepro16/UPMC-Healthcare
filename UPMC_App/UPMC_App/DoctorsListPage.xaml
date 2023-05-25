@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="UPMC_App.DoctorsListPage"
+             xmlns:controls="clr-namespace:UPMC_App.MyControls"
+             Title="{Binding SearchPageTitle}" NavigationPage.BackButtonTitle="Back" >
+    <ContentPage.Content>
+        <Grid BackgroundColor="White">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <ListView Grid.Row="1" ItemsSource="{Binding SearchResults}" HasUnevenRows="True" SelectionMode="None" ItemTapped="ListView_ItemTapped" BackgroundColor="White">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid Padding="10,8,10,8">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <Label Text="{Binding FriendlyName}" FontSize="Medium" FontAttributes="Bold" TextColor="Black"/>
+                                <Label Text="{Binding Description}" Grid.Row="1"/>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <Grid x:Name="gridPopup" Grid.RowSpan="2" BackgroundColor="{StaticResource WaitingBlackColor}" IsVisible="False" 
+                  BindingContext="{Binding SelectedProviderItem}">
+                <ScrollView Margin="10" BackgroundColor="White" VerticalOptions="Center" HorizontalOptions="Fill" Padding="10">
+                    <StackLayout>
+                        <Grid RowSpacing="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Label Text="{Binding FriendlyName}" TextColor="Black" FontAttributes="Bold" FontSize="Medium" LineBreakMode="TailTruncation" Margin="0,0,55,0"/>
+                            <Label Grid.Row="1" Margin="0,0,55,0">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="{Binding DescriptionType}" FontAttributes="Bold"/>
+                                        <Span Text="{Binding DescriptionDetails}"/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                            <Label Grid.Row="2" Text="{Binding FullAddressString}" Margin="0,4,0,0"/>
+
+                            <Grid Grid.RowSpan="3" VerticalOptions="Start" HorizontalOptions="End" HeightRequest="90" WidthRequest="55" 
+                                  BackgroundColor="{StaticResource NavBarBackgroundColor}" RowSpacing="0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <Image Source="baseline_phone_black_36.png" HeightRequest="36" WidthRequest="36" HorizontalOptions="Center" VerticalOptions="Center">
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="Phone_Tapped"/>
+                                    </Image.GestureRecognizers>
+                                </Image>
+
+                                <BoxView Color="{StaticResource HeaderTextColor}" Grid.Row="1" HorizontalOptions="Fill" VerticalOptions="Start" HeightRequest="1" Margin="5,0,5,0"/>
+                                
+                                <Image Source="baseline_place_black_36.png" Grid.Row="2" HeightRequest="36" WidthRequest="36" HorizontalOptions="Center" VerticalOptions="Center">
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="SelectedProviderMap_Tapped"/>
+                                    </Image.GestureRecognizers>
+                                </Image>
+                            </Grid>
+                        </Grid>
+
+                        <StackLayout Orientation="Horizontal" Margin="0,4,0,0">
+                            <Label Text="Phone: " FontAttributes="Bold"/>
+                            <Label Text="{Binding Phone}" TextColor="Blue">
+                                <Label.Effects>
+                                    <controls:UnderlineEffect/>
+                                </Label.Effects>
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="Phone_Tapped"/>
+                                </Label.GestureRecognizers>
+                            </Label>
+                        </StackLayout>
+                        <Label Text="Hours:" FontAttributes="Bold" Margin="0,4,0,0" IsVisible="{Binding OperatingHours.DisplayStatus, Converter={StaticResource StringToBoolConverter}}"/>
+                        <StackLayout x:Name="stackCurrentOpenStatus" Orientation="Horizontal">
+                            <Label Text="{Binding OperatingHours.DisplayStatus}"/>
+                            <Label Text="(View Hours)" VerticalOptions="Center" TextColor="{StaticResource MainAccentColor}" IsVisible="{Binding HasOperatingHours}">
+                                <Label.Effects>
+                                    <controls:UnderlineEffect/>
+                                </Label.Effects>
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OpenHours_Tapped"/>
+                                </Label.GestureRecognizers>
+                            </Label>
+                        </StackLayout>
+
+                        <StackLayout x:Name="stackOpenHours" IsVisible="False">
+                            <StackLayout.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OpenHours_Tapped"/>
+                            </StackLayout.GestureRecognizers>
+                        </StackLayout>
+
+                        <Button x:Name="btnShowPlan" HorizontalOptions="Fill" Text="SHOW PLANS" FontSize="Medium" Margin="0,10,0,5" BackgroundColor="{StaticResource GreenButtonColor}" 
+                                TextColor="White" Clicked="BtnShowPlanDetails_Clicked" />
+                        <StackLayout x:Name="stackPlansAccepted" IsVisible="False"/>
+
+                        <Label Text="Check with the pharmacy before filling meds to make sure that they accept your plan." IsVisible="{Binding IsPharmacyItem}"/>
+
+                        <Button HorizontalOptions="Fill" Text="CLOSE" FontSize="Medium" Margin="0,5,0,5" BackgroundColor="{StaticResource GrayBackgroundColor}" 
+                                TextColor="White" Clicked="BtnCloseDetails_Clicked" />
+                    </StackLayout>
+                </ScrollView>
+            </Grid>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

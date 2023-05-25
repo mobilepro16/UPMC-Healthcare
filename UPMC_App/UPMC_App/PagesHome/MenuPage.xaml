@@ -1,0 +1,216 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:abstractions="clr-namespace:SVG.Forms.Plugin.Abstractions;assembly=SVG.Forms.Plugin.Abstractions"
+             x:Name="mainMenuPage"
+             xmlns:converters="clr-namespace:UPMC_App.Converters"
+             xmlns:controls="clr-namespace:UPMC_App.MyControls"
+             x:Class="UPMC_App.MenuPage" BackgroundColor="White" Padding="10,10,10,0">
+    <ContentPage.Padding>
+        <OnPlatform x:TypeArguments="Thickness">
+            <On Platform="Android">10</On>
+            <On Platform="iOS">10,16,10,10</On>
+        </OnPlatform>
+    </ContentPage.Padding>
+
+    <ContentPage.Resources>
+        <converters:ActiveBoolToTextColorConverter x:Key="ActiveBoolToTextColorConverter"/>
+
+        <DataTemplate x:Key="FullHeaderTemplate">
+            <ViewCell>
+                <Grid BackgroundColor="White">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <BoxView Color="{StaticResource myBackgroundColor}" HorizontalOptions="Fill" HeightRequest="2" Margin="0,15,0,10"/>
+                    <BoxView Grid.Row="1" BackgroundColor="{StaticResource GrayBackgroundColor}" HorizontalOptions="StartAndExpand"  VerticalOptions="Center" HeightRequest="26" WidthRequest="150" />
+                    <Label Grid.Row="1" Text="{Binding Group.GroupName}" TextColor="White" FontAttributes="Bold" VerticalOptions="Center" Margin="16,0,0,0"/>
+                    <BoxView Grid.Row="2" Color="Transparent" HeightRequest="1" HorizontalOptions="Start" VerticalOptions="Start" Margin="0,10,0,0"/>
+                </Grid>
+            </ViewCell>
+        </DataTemplate>
+        <DataTemplate x:Key="FullHeaderTemplateIOS">
+            <ViewCell Height="80">
+                <Grid BackgroundColor="White" Margin="0,-1,0,-1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <BoxView Color="{StaticResource myBackgroundColor}" HorizontalOptions="Fill" HeightRequest="2" Margin="0,15,0,10"/>
+                    <BoxView Grid.Row="1" BackgroundColor="{StaticResource GrayBackgroundColor}" HorizontalOptions="StartAndExpand"  VerticalOptions="Center" HeightRequest="26" WidthRequest="180" />
+                    <Label Grid.Row="1" Text="{Binding Group.GroupName}" TextColor="White" FontAttributes="Bold" VerticalOptions="Center" Margin="16,0,0,0"/>
+                    <BoxView Grid.Row="2" Color="Transparent" HeightRequest="1" HorizontalOptions="Start" VerticalOptions="Start" Margin="0,10,0,0"/>
+                </Grid>
+            </ViewCell>
+        </DataTemplate>
+        <DataTemplate x:Key="RegularHeaderTemplate">
+            <ViewCell>
+                <Grid Padding="0,10,0,10" BackgroundColor="White">
+                    <Grid.Margin>
+                        <OnPlatform x:TypeArguments="Thickness">
+                            <On Platform="Android">0</On>
+                            <On Platform="iOS">0,-1,0,-1</On>
+                        </OnPlatform>
+                    </Grid.Margin>
+                    <BoxView BackgroundColor="{StaticResource GrayBackgroundColor}" HorizontalOptions="StartAndExpand"  VerticalOptions="Center" HeightRequest="26" WidthRequest="150">
+                        <BoxView.WidthRequest>
+                            <OnPlatform x:TypeArguments="x:Double">
+                                <On Platform="Android">150</On>
+                                <On Platform="iOS">180</On>
+                            </OnPlatform>
+                        </BoxView.WidthRequest>
+                    </BoxView>
+                    <Label Text="{Binding Group.GroupName}" TextColor="White" FontAttributes="Bold" VerticalOptions="Center" Margin="16,0,0,0"/>
+                </Grid>
+            </ViewCell>
+        </DataTemplate>
+        <DataTemplate x:Key="EmptyHeaderTemplate">
+            <ViewCell Height="1">
+                <Grid Margin="0,-1,0,-1" BackgroundColor="White"/>
+            </ViewCell>
+        </DataTemplate>
+        <DataTemplate x:Key="OnlyDividerHeaderTemplate">
+            <ViewCell>
+                <Grid>
+                    <BoxView Color="{StaticResource myBackgroundColor}" HorizontalOptions="Fill" HeightRequest="2" Margin="0,15,0,15" />
+                </Grid>
+            </ViewCell>
+        </DataTemplate>
+        <DataTemplate x:Key="OnlyDividerHeaderTemplateIOS">
+            <ViewCell Height="30">
+                <Grid BackgroundColor="White" Margin="0,-1,0,-1">
+                    <BoxView Color="{StaticResource myBackgroundColor}" HorizontalOptions="Fill" HeightRequest="2" Margin="0,15,0,15" />
+                </Grid>
+            </ViewCell>
+        </DataTemplate>
+
+        <converters:MenuListHeaderTemplateSelector x:Key="MenuListHeaderTemplateSelector" 
+                                                   RegularDataTemplate="{StaticResource RegularHeaderTemplate}"
+                                                   EmptyDataTemplate="{StaticResource EmptyHeaderTemplate}">
+            <converters:MenuListHeaderTemplateSelector.FullDataTemplate>
+                <OnPlatform x:TypeArguments="DataTemplate">
+                    <On Platform="Android" Value="{StaticResource FullHeaderTemplate}"/>
+                    <On Platform="iOS" Value="{StaticResource FullHeaderTemplateIOS}"/>
+                </OnPlatform>
+            </converters:MenuListHeaderTemplateSelector.FullDataTemplate>
+        </converters:MenuListHeaderTemplateSelector>
+
+        <converters:MainMenuListHeaderTemplateSelector x:Key="MainMenuListHeaderTemplateSelector" 
+                                                   EmptyDataTemplate="{StaticResource EmptyHeaderTemplate}">
+            <converters:MainMenuListHeaderTemplateSelector.FullDataTemplate>
+                <OnPlatform x:TypeArguments="DataTemplate">
+                    <On Platform="Android" Value="{StaticResource FullHeaderTemplate}"/>
+                    <On Platform="iOS" Value="{StaticResource FullHeaderTemplateIOS}"/>
+                </OnPlatform>
+            </converters:MainMenuListHeaderTemplateSelector.FullDataTemplate>
+            <converters:MainMenuListHeaderTemplateSelector.RegularDataTemplate>
+                <OnPlatform x:TypeArguments="DataTemplate">
+                    <On Platform="Android" Value="{StaticResource OnlyDividerHeaderTemplate}"/>
+                    <On Platform="iOS" Value="{StaticResource OnlyDividerHeaderTemplateIOS}"/>
+                </OnPlatform>
+            </converters:MainMenuListHeaderTemplateSelector.RegularDataTemplate>
+        </converters:MainMenuListHeaderTemplateSelector>
+
+
+        <DataTemplate x:Key="MainItemTemplate">
+            <ViewCell>
+                <Grid Margin="10,0,10,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="22"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <abstractions:SvgImage SvgAssembly="{Binding SvgAssembly}" SvgPath="{Binding ItemImage}" 
+                                       HeightRequest="{Binding ImageHeight}" WidthRequest="{Binding ImageWidth}" HorizontalOptions="Center" VerticalOptions="Center"/>
+                    <Label Grid.Column="1" Text="{Binding Name}" FontSize="Medium" VerticalOptions="Center" Margin="4,10,0,10"/>
+                </Grid>
+            </ViewCell>
+        </DataTemplate>
+        <DataTemplate x:Key="SimpleItemTemplate">
+            <ViewCell>
+                <Grid Margin="10,0,10,0">
+                    <controls:HtmlFormattedLabel Text="{Binding Name}" VerticalOptions="Center" Margin="0,10,0,10"/>
+                </Grid>
+            </ViewCell>
+        </DataTemplate>
+        <DataTemplate x:Key="SettingsItemTemplate">
+            <ViewCell>
+                <Grid Margin="10,0,10,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="22"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <!--<abstractions:SvgImage SvgAssembly="{Binding SvgAssembly}" SvgPath="{Binding ItemImage}" 
+                                       HeightRequest="{Binding ImageHeight}" WidthRequest="{Binding ImageWidth}" HorizontalOptions="Center" VerticalOptions="Center"/>-->
+                    <Image Source="{Binding ItemImage}" HeightRequest="14" WidthRequest="14" HorizontalOptions="Center" VerticalOptions="Center"/>
+                    <Label Grid.Column="1" Text="{Binding Name}" VerticalOptions="Center" Margin="4,10,0,10"/>
+                </Grid>
+            </ViewCell>
+        </DataTemplate>
+        <converters:MainMenuItemTemplateSelector x:Key="MainMenuItemTemplateSelector"
+                                                 MainDataTemplate="{StaticResource MainItemTemplate}"
+                                                 SimpleDataTemplate="{StaticResource SimpleItemTemplate}"
+                                                 SettingsDataTemplate="{StaticResource SettingsItemTemplate}"/>
+
+        <converters:SubMenuItemTemplateSelector x:Key="SubMenuItemTemplateSelector">
+            <converters:SubMenuItemTemplateSelector.GeneralDataTemplate>
+                <DataTemplate>
+                    <ViewCell IsEnabled="{Binding IsActive}">
+                        <Grid>
+                            <!--<controls:HtmlFormattedLabel Text="{Binding Name}" FontSize="Medium" VerticalOptions="Center" Margin="16,10,0,10" 
+                                                         TextColor="{Binding IsActive, Converter={StaticResource ActiveBoolToTextColorConverter}}"/>-->
+                            <Label Text="{Binding Name}" FontSize="Medium" VerticalOptions="Center" Margin="16,10,0,10" 
+                                                         IsEnabled="{Binding IsActive}"/>
+                        </Grid>
+                    </ViewCell>
+                </DataTemplate>
+            </converters:SubMenuItemTemplateSelector.GeneralDataTemplate>
+            <converters:SubMenuItemTemplateSelector.RelatedDataTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Grid>
+                            <Frame VerticalOptions="Start" HorizontalOptions="Fill" CornerRadius="5" BackgroundColor="{StaticResource myBackgroundColor}" Margin="10,6,10,6" 
+                                               Padding="10" >
+                                <controls:HtmlFormattedLabel Text="{Binding Name}"/>
+                            </Frame>
+                        </Grid>
+                    </ViewCell>
+                </DataTemplate>
+            </converters:SubMenuItemTemplateSelector.RelatedDataTemplate>
+        </converters:SubMenuItemTemplateSelector>
+    </ContentPage.Resources>
+    
+    <ContentPage.Content>
+        <Grid BackgroundColor="White">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Label x:Name="lblMainMenuTitle" Text="Menu" FontSize="Large" FontAttributes="Bold" TextColor="{Binding IsMainMenuActive, Converter={StaticResource ActiveBoolToTextColorConverter}}" />
+            <AbsoluteLayout Grid.Row="1" VerticalOptions="Fill">
+                <ListView AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All" x:Name="mainMenuList"
+                        ItemsSource="{Binding MainMenu}" SelectionMode="None" ItemTapped="mainMenuItem_Tapped" SeparatorVisibility="None" SeparatorColor="Transparent" HasUnevenRows="True"
+                              IsGroupingEnabled="True" GroupHeaderTemplate="{StaticResource MainMenuListHeaderTemplateSelector}"
+                              ItemTemplate="{StaticResource MainMenuItemTemplateSelector}" Margin="-10,0,-10,0" BackgroundColor="White" >
+                </ListView>
+
+                <StackLayout AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All" x:Name="submenuBlock">
+                    <Grid>
+                        <Label x:Name="lblSubmenuTitle" Text="{Binding CurrentSection.Title}" FontSize="Large" FontAttributes="Bold" TextColor="{StaticResource MainAccentColor}" VerticalOptions="Center" />
+                        <abstractions:SvgImage SvgAssembly="{Binding SvgAssembly}" SvgPath="UPMC_App.Images.Menu.icon-chevron-up.svg" 
+                                       HeightRequest="8" WidthRequest="14" HorizontalOptions="End" VerticalOptions="Center" Margin="0,2,0,0"/>
+                    </Grid>
+
+                    <ListView x:Name="subMenuList" ItemsSource="{Binding CurrentSection.GroupedListItems}" IsGroupingEnabled="True" Margin="-10,0,-10,0"
+                              SelectionMode="None" SeparatorVisibility="None" HasUnevenRows="True"
+                              GroupHeaderTemplate="{StaticResource MenuListHeaderTemplateSelector}" ItemTemplate="{StaticResource SubMenuItemTemplateSelector}"
+                              BackgroundColor="White" ItemTapped="subMenuList_ItemTaPPED">
+                    </ListView>
+                </StackLayout>
+
+            </AbsoluteLayout>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

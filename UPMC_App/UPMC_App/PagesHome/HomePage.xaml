@@ -1,0 +1,342 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:abstractions="clr-namespace:SVG.Forms.Plugin.Abstractions;assembly=SVG.Forms.Plugin.Abstractions"
+             xmlns:converters="clr-namespace:UPMC_App.Converters"
+             x:Class="UPMC_App.HomePage">
+
+    <ContentPage.Resources>
+        <converters:BoolToNegateBoolConverter x:Key="BoolToNegateBoolConverter"/>
+    </ContentPage.Resources>
+    
+    <ContentPage.Padding>
+        <OnPlatform x:TypeArguments="Thickness">
+            <On Platform="Android">0</On>
+            <On Platform="iOS">0,6,0,0</On>
+        </OnPlatform>
+    </ContentPage.Padding>
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout>
+                <Frame Padding="10">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Label Text="{Binding WelcomeTitle}" FontSize="Medium" FontAttributes="Bold" TextColor="{StaticResource HeaderTextColor}"/>
+                        <StackLayout Grid.Row="1" Orientation="Horizontal">
+                            <Label Text="Member No." VerticalOptions="Center"/>
+                            <Label Text="{Binding MemberIdFriendly}" Margin="4,0,0,0" VerticalOptions="Center"/>
+                            <StackLayout x:Name="stackShowMemberId" Orientation="Horizontal" Margin="8,0,0,0" BackgroundColor="Transparent">
+                                <Grid HeightRequest="21">
+                                    <abstractions:SvgImage SvgAssembly="{Binding SvgAssembly}" SvgPath="UPMC_App.Images.Home.icon_eye.svg" 
+                                              WidthRequest="19" HeightRequest="13" VerticalOptions="Center" IsVisible="{Binding IsMemberIdVisible, Converter={StaticResource BoolToNegateBoolConverter}}"/>
+                                    <abstractions:SvgImage SvgAssembly="{Binding SvgAssembly}" SvgPath="UPMC_App.Images.Home.icon_eye_hide.svg" 
+                                              WidthRequest="19" HeightRequest="21" VerticalOptions="Center" IsVisible="{Binding IsMemberIdVisible}"/>
+                                </Grid>
+                                
+                                <Label Text="{Binding ShowMemberIdText}" TextColor="{StaticResource MainAccentColor}" Margin="2,0,0,0" VerticalOptions="Center"/>
+                            </StackLayout>
+                        </StackLayout>
+                        <StackLayout Grid.Row="2" Orientation="Horizontal" Margin="0,8,0,0">
+                            <abstractions:SvgImage SvgAssembly="{Binding SvgAssembly}" SvgPath="UPMC_App.Images.Home.icon-id-card.svg" 
+                                              WidthRequest="20" HeightRequest="19" />
+
+                            <Label x:Name="lblIdCards" Text="ID Cards" TextColor="{StaticResource MainAccentColor}" FontAttributes="Bold" 
+                                   Margin="2,0,0,0" VerticalOptions="Center"/>
+                            <abstractions:SvgImage SvgAssembly="{Binding SvgAssembly}" SvgPath="UPMC_App.Images.Home.icon-settings.svg" 
+                                   WidthRequest="19" HeightRequest="19" Margin="16,0,0,0"/>
+                            <Label x:Name="lblYourSettings" Text="Your Settings" TextColor="{StaticResource MainAccentColor}" FontAttributes="Bold" 
+                                   Margin="2,0,0,0" VerticalOptions="Center"/>
+                        </StackLayout>
+                        <Grid BackgroundColor="White" Grid.RowSpan="3" IsVisible="{Binding IsIdBlockLoading}">
+                            <ActivityIndicator HorizontalOptions="Center" VerticalOptions="Center" Color="{StaticResource MainAccentColor}" IsRunning="True"/>
+                        </Grid>
+                    </Grid>
+                </Frame>
+
+                <Frame Padding="10">
+                    <Grid>
+                        <StackLayout>
+                            <Grid VerticalOptions="Center">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Label Text="Recent Claims" FontSize="Medium" FontAttributes="Bold" TextColor="{StaticResource HeaderTextColor}"/>
+                                <Label Grid.Column="1" Text="View All" TextColor="{StaticResource MainAccentColor}" FontAttributes="Bold" 
+                               Margin="4,0,0,0" VerticalOptions="Center">
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="ViewAllClaims_Tapped"/>
+                                    </Label.GestureRecognizers>
+                                </Label>
+                            </Grid>
+                            <BoxView Color="{StaticResource myBackgroundColor}" HorizontalOptions="Fill" HeightRequest="2" Margin="-10,4,-10,4"/>
+
+                            <!--No claims block-->
+                            <Grid HorizontalOptions="Center" IsVisible="{Binding HasClaims, Converter={StaticResource BoolToNegateBoolConverter}}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Label Text="No claims within &#x0a;the last 90 days" FontAttributes="Bold" VerticalOptions="Center" TextColor="{StaticResource HeaderTextColor}"/>
+                                <!--<Image Grid.Column="1" Source="illus_claim.png" HeightRequest="60"/>-->
+                                <abstractions:SvgImage Grid.Column="1" SvgAssembly="{Binding SvgAssembly}" SvgPath="UPMC_App.Images.Home.illus_claim.svg" 
+                                               HeightRequest="60" WidthRequest="49" HorizontalOptions="Center" VerticalOptions="Center"/>
+                            </Grid>
+                            <Label Text="Claims may not display for all &#x0a;covered members" HorizontalOptions="Center" Margin="0,2,0,0" 
+                               IsVisible="{Binding HasClaims, Converter={StaticResource BoolToNegateBoolConverter}}"/>
+
+                            <!--First claim-->
+                            <Grid IsVisible="{Binding IsClaimVisible}" BindingContext="{Binding FirstClaim}" Margin="0,0,-5,0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="45"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="145"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="RecentClaim_Tapped"/>
+                                </Grid.GestureRecognizers>
+                                <Label Text="{Binding MonthShort}" FontAttributes="Bold" FontSize="Medium" HorizontalOptions="Center" TextColor="{StaticResource HeaderTextColor}"/>
+                                <Label Grid.Row="1" Text="{Binding DayShort}" FontAttributes="Bold" FontSize="Medium" HorizontalOptions="Center" VerticalOptions="End" TextColor="{StaticResource HeaderTextColor}"/>
+
+                                <Label Grid.Column="1" Text="{Binding Provider}" FontSize="Medium" LineBreakMode="TailTruncation"/>
+                                <Label Grid.Column="1" Grid.Row="1" Text="{Binding ForCoveredMemberString}" LineBreakMode="TailTruncation" VerticalOptions="End"/>
+
+                                <StackLayout Grid.Column="2" Grid.RowSpan="2" HorizontalOptions="Center" VerticalOptions="Center">
+                                    <Image Source="{Binding ClaimStatusImage}" WidthRequest="29" HeightRequest="29" />
+                                    <Label HorizontalOptions="Center" LineBreakMode="TailTruncation">
+                                        <Label.FormattedText>
+                                            <FormattedString>
+                                                <Span Text="{Binding ClaimStatus}" FontAttributes="Bold" FontSize="Micro"/>
+                                                <Span Text="{Binding ClaimStatusByText}" FontSize="Micro"/>
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                    </Label>
+                                </StackLayout>
+                            </Grid>
+                            <!--Second claim-->
+                            <BoxView IsVisible="{Binding HasSecondClaim}" Color="{StaticResource myBackgroundColor}" HorizontalOptions="Fill" HeightRequest="2" Margin="-10,4,-10,4"/>
+                            <Grid IsVisible="{Binding IsClaimVisible}" BindingContext="{Binding SecondClaim}" Margin="0,0,-5,0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="45"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="145"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="RecentClaim_Tapped"/>
+                                </Grid.GestureRecognizers>
+                                <Label Text="{Binding MonthShort}" FontAttributes="Bold" FontSize="Medium" HorizontalOptions="Center" TextColor="{StaticResource HeaderTextColor}"/>
+                                <Label Grid.Row="1" Text="{Binding DayShort}" FontAttributes="Bold" FontSize="Medium" HorizontalOptions="Center" VerticalOptions="End" TextColor="{StaticResource HeaderTextColor}"/>
+
+                                <Label Grid.Column="1" Text="{Binding Provider}" FontSize="Medium"/>
+                                <Label Grid.Column="1" Grid.Row="1" Text="{Binding ForCoveredMemberString}" LineBreakMode="TailTruncation"  VerticalOptions="End"/>
+
+                                <StackLayout Grid.Column="2" Grid.RowSpan="2" HorizontalOptions="Center" VerticalOptions="Center">
+                                    <Image Source="{Binding ClaimStatusImage}" WidthRequest="29" HeightRequest="29" />
+                                    <Label HorizontalOptions="Center" LineBreakMode="TailTruncation">
+                                        <Label.FormattedText>
+                                            <FormattedString>
+                                                <Span Text="{Binding ClaimStatus}" FontAttributes="Bold" FontSize="Micro"/>
+                                                <Span Text="{Binding ClaimStatusByText}" FontSize="Micro"/>
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                    </Label>
+                                </StackLayout>
+                            </Grid>
+                        </StackLayout>
+
+                        <Grid BackgroundColor="White" IsVisible="{Binding IsClaimBlockLoading}">
+                            <ActivityIndicator HorizontalOptions="Center" VerticalOptions="Center" Color="{StaticResource MainAccentColor}" IsRunning="True"/>
+                        </Grid>
+                    </Grid>
+                </Frame>
+                
+                <Frame Padding="10">
+                    <StackLayout>
+                        <Label Text="Find Care In Your Network" FontSize="Medium" FontAttributes="Bold" TextColor="{StaticResource HeaderTextColor}"/>
+                        <Grid Margin="0,2,0,0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <abstractions:SvgImage Grid.Column="0" SvgAssembly="{Binding SvgAssembly}" SvgPath="UPMC_App.Images.Home.illus-find-doctors.svg" 
+                                               HeightRequest="62" WidthRequest="63" HorizontalOptions="Center" VerticalOptions="Center">
+                                <abstractions:SvgImage.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="DoctorsSearch_Tapped"/>
+                                </abstractions:SvgImage.GestureRecognizers>
+                            </abstractions:SvgImage>
+                            <abstractions:SvgImage Grid.Column="1" SvgAssembly="{Binding SvgAssembly}" SvgPath="UPMC_App.Images.Home.illus-find-hospitals.svg" 
+                                               HeightRequest="62" WidthRequest="63" HorizontalOptions="Center" VerticalOptions="Center">
+                                <abstractions:SvgImage.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="HospitalsSearch_Tapped"/>
+                                </abstractions:SvgImage.GestureRecognizers>
+                            </abstractions:SvgImage>
+                            <abstractions:SvgImage Grid.Column="2" SvgAssembly="{Binding SvgAssembly}" SvgPath="UPMC_App.Images.Home.illus-view-all-care.svg" 
+                                               HeightRequest="62" WidthRequest="63" HorizontalOptions="Center" VerticalOptions="Center">
+                                <abstractions:SvgImage.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="FindAllCare_Tapped"/>
+                                </abstractions:SvgImage.GestureRecognizers>
+                            </abstractions:SvgImage>
+
+                            <Label Grid.Row="1" Grid.Column="0" Text="Doctors" TextColor="{StaticResource MainAccentColor}" FontAttributes="Bold" 
+                                   HorizontalOptions="Center" FontSize="{Binding ChapterTitleFontSize}">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="DoctorsSearch_Tapped"/>
+                                </Label.GestureRecognizers>
+                            </Label>
+                            <Label Grid.Row="1" Grid.Column="1" Text="Hospitals" TextColor="{StaticResource MainAccentColor}" FontAttributes="Bold" 
+                                   HorizontalOptions="Center" FontSize="{Binding ChapterTitleFontSize}">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="HospitalsSearch_Tapped"/>
+                                </Label.GestureRecognizers>
+                            </Label>
+                            <Label Grid.Row="1" Grid.Column="2" Text="View All" TextColor="{StaticResource MainAccentColor}" FontAttributes="Bold" 
+                                   HorizontalOptions="Center" FontSize="{Binding ChapterTitleFontSize}">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="FindAllCare_Tapped"/>
+                                </Label.GestureRecognizers>
+                            </Label>
+                        </Grid>
+
+                        <BoxView Color="{StaticResource myBackgroundColor}" HorizontalOptions="Fill" HeightRequest="2" Margin="-10,4,-10,4"/>
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <StackLayout Margin="0,0,2,0">
+                                <Label Text="Live video visits:" FontSize="Medium" FontAttributes="Bold" TextColor="{StaticResource HeaderTextColor}"/>
+                                <Label Text="UPMC AnywhereCare"  FontAttributes="Bold" TextColor="{StaticResource HeaderTextColor}"/>
+                                <Label Text="24/7 online medical visits to fit your schedule. Connect in minutes."/>
+                                <StackLayout Orientation="Horizontal" Margin="0,4,0,0">
+                                    <Label Text="Download" TextColor="{StaticResource MainAccentColor}" FontAttributes="Bold" VerticalOptions="Center"/>
+                                    <abstractions:SvgImage SvgAssembly="{Binding SvgAssembly}" SvgPath="UPMC_App.Images.Home.icon-external-link.svg" 
+                                         WidthRequest="16" HeightRequest="16" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                </StackLayout>
+                            </StackLayout>
+                            <abstractions:SvgImage Grid.Column="1" SvgAssembly="{Binding SvgAssembly}" SvgPath="UPMC_App.Images.Home.illus-awc-phone.svg" 
+                                  WidthRequest="89" HeightRequest="153" HorizontalOptions="Center" VerticalOptions="Center"/>
+                        </Grid>
+                        
+                    </StackLayout>
+                </Frame>
+                
+                <Frame Padding="10">
+                    <StackLayout>
+                        <StackLayout Orientation="Horizontal">
+                            <Label Text="Live Chat" FontSize="Medium" FontAttributes="Bold" TextColor="{StaticResource HeaderTextColor}"/>
+                            <Label Text="Available" TextColor="Green" VerticalOptions="Center" Margin="4,0,0,0"/>
+                        </StackLayout>
+                        <Label Text="Today's Hours: 7 a.m. to 7 p.m. EST" />
+                        <!--<Grid Margin="0,2,0,0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Label  Grid.Column="1" Text="Text first message"/>
+                            <Label Grid.Row="1" Grid.Column="1" Text="Text second message text second message text second message text second message text second message"/>
+                        </Grid>-->
+                        <Frame Padding="10" Margin="4,2,16,0" BackgroundColor="{StaticResource myBackgroundColor}" HorizontalOptions="Start">
+                            <Label Text="What can we help you with?"/>
+                        </Frame>
+                        <Frame Padding="10" Margin="4,2,16,0" BackgroundColor="{StaticResource myBackgroundColor}" HorizontalOptions="Start">
+                            <Label Text="Chat with us about your coverage. (Or talk to a coach about health and maternity topics!)"/>
+                        </Frame>
+                        <Button Text=" Choose a Topic" BackgroundColor="{StaticResource MainAccentColor}" TextColor="White" HorizontalOptions="Center"
+                                Margin="0,6,0,0" FontSize="Medium" FontAttributes="Bold"/>
+                    </StackLayout>
+                </Frame>
+                
+                <Frame Padding="10">
+                    <StackLayout>
+                        <Label Text="Access Your Medical File" FontSize="Medium" FontAttributes="Bold" TextColor="{StaticResource HeaderTextColor}"/>
+                        <Label Text="Your file includes select history about visits, tests, and more." />
+                        <Grid Margin="0,2,0,0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <abstractions:SvgImage Grid.Column="0" SvgAssembly="{Binding SvgAssembly}" SvgPath="UPMC_App.Images.Home.illus-your-providers.svg" 
+                                               HeightRequest="62" WidthRequest="63" HorizontalOptions="Center" VerticalOptions="Center">
+                                <abstractions:SvgImage.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="YourProviders_Tapped"/>
+                                </abstractions:SvgImage.GestureRecognizers>
+                            </abstractions:SvgImage>
+                            <abstractions:SvgImage Grid.Column="1" SvgAssembly="{Binding SvgAssembly}" SvgPath="UPMC_App.Images.Home.illus-pharmacy.svg" 
+                                               HeightRequest="62" WidthRequest="63" HorizontalOptions="Center" VerticalOptions="Center" x:Name="imgPharmacy"/>
+                            <abstractions:SvgImage Grid.Column="2" SvgAssembly="{Binding SvgAssembly}" SvgPath="UPMC_App.Images.Home.illus-view-all-file.svg" 
+                                               HeightRequest="62" WidthRequest="63" HorizontalOptions="Center" VerticalOptions="Center">
+                                <abstractions:SvgImage.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="FindAllMedicalFile_Tapped"/>
+                                </abstractions:SvgImage.GestureRecognizers>
+                            </abstractions:SvgImage>
+
+                            <StackLayout Grid.Row="1" Grid.Column="0">
+                                <Label Text="Your Providers" TextColor="{StaticResource MainAccentColor}" FontAttributes="Bold" 
+                                   HorizontalOptions="Center" HorizontalTextAlignment="Center" FontSize="{Binding ChapterTitleFontSize}">
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="YourProviders_Tapped"/>
+                                    </Label.GestureRecognizers>
+                                </Label>
+                            </StackLayout>
+                            <StackLayout Grid.Row="1" Grid.Column="1" MinimumHeightRequest="35" x:Name="stackPharmacy" >
+                                <Label Text="Prescriptions &amp; Pharmacy" TextColor="{StaticResource MainAccentColor}" FontAttributes="Bold" 
+                                   HorizontalOptions="Center" HorizontalTextAlignment="Center" FontSize="{Binding ChapterTitleFontSize}" />
+                            </StackLayout>
+
+                            <Label Grid.Row="1" Grid.Column="2" Text="View All" TextColor="{StaticResource MainAccentColor}" FontAttributes="Bold" 
+                                   HorizontalOptions="Center" FontSize="{Binding ChapterTitleFontSize}">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="FindAllMedicalFile_Tapped"/>
+                                </Label.GestureRecognizers>
+                            </Label>
+
+                            <Grid BackgroundColor="White" Grid.RowSpan="2" Grid.ColumnSpan="3" IsVisible="{Binding IsPrescriptionBlockLoading}">
+                                <ActivityIndicator HorizontalOptions="Center" VerticalOptions="Center" Color="{StaticResource MainAccentColor}" IsRunning="True"/>
+                            </Grid>
+                            
+                        </Grid>
+                        <Label Margin="0,4,0,2"/>
+                    </StackLayout>
+                </Frame>
+                
+                <Frame Padding="10" Margin="0,0,0,10">
+                    <StackLayout>
+                        <Label Text="Don't see what you're looking for?" TextColor="{StaticResource HeaderTextColor}" FontAttributes="Bold"
+                               HorizontalOptions="Center"/>
+                        <Label Text="Let us know. We read every piece of feedback that we receive!"/>
+                        <Button Text=" Send App Feedback " BackgroundColor="{StaticResource MainAccentColor}" TextColor="White" HorizontalOptions="Center"
+                                Margin="0,6,0,0" FontSize="Medium" FontAttributes="Bold"/>
+                    </StackLayout>
+                </Frame>
+
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

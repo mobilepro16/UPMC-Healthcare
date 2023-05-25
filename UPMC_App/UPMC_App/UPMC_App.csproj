@@ -1,0 +1,144 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup Label="Globals">
+    <SccProjectName>SAK</SccProjectName>
+    <SccProvider>SAK</SccProvider>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccLocalPath>SAK</SccLocalPath>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Images\fingerImage.png" />
+    <None Remove="Images\gps_arrow.png" />
+    <None Remove="Images\Home\icon-external-link.svg" />
+    <None Remove="Images\Home\icon_eye_hide.svg" />
+    <None Remove="Images\Home\illus-awc-phone.svg" />
+    <None Remove="Images\Home\illus-find-doctors.svg" />
+    <None Remove="Images\Home\illus-find-hospitals.svg" />
+    <None Remove="Images\Home\illus-pharmacy.svg" />
+    <None Remove="Images\Home\illus-view-all-care.svg" />
+    <None Remove="Images\Home\illus-view-all-file.svg" />
+    <None Remove="Images\Home\illus-your-providers.svg" />
+    <None Remove="Images\hp_logo_big.png" />
+    <None Remove="Images\icon-id-card.svg" />
+    <None Remove="Images\icon-settings.svg" />
+    <None Remove="Images\icon_eye.svg" />
+    <None Remove="Images\illus_claim.svg" />
+    <None Remove="Images\Menu\icon-betterhealth.svg" />
+    <None Remove="Images\Menu\icon-chevron-up.svg" />
+    <None Remove="Images\Menu\icon-findcare.svg" />
+    <None Remove="Images\Menu\icon-insurance.svg" />
+    <None Remove="Images\Menu\icon-medicalfile.svg" />
+    <None Remove="Images\Menu\icon-rewards.svg" />
+    <None Remove="Images\Pharmacy\az.png" />
+    <None Remove="Images\Pharmacy\az_Black.png" />
+    <None Remove="Images\Pharmacy\date-btn.png" />
+    <None Remove="Images\Pharmacy\date-btn_Black.png" />
+    <None Remove="Images\titleImage.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Images\fingerImage.png" />
+    <EmbeddedResource Include="Images\gps_arrow.png" />
+    <EmbeddedResource Include="Images\Home\icon-external-link.svg" />
+    <EmbeddedResource Include="Images\Home\icon_eye_hide.svg" />
+    <EmbeddedResource Include="Images\Home\illus-awc-phone.svg" />
+    <EmbeddedResource Include="Images\Home\illus-find-doctors.svg" />
+    <EmbeddedResource Include="Images\Home\illus-find-hospitals.svg" />
+    <EmbeddedResource Include="Images\Home\illus-pharmacy.svg" />
+    <EmbeddedResource Include="Images\Home\illus-view-all-care.svg" />
+    <EmbeddedResource Include="Images\Home\illus-view-all-file.svg" />
+    <EmbeddedResource Include="Images\Home\illus-your-providers.svg" />
+    <EmbeddedResource Include="Images\hp_logo_big.png" />
+    <EmbeddedResource Include="Images\Home\icon_eye.svg" />
+    <EmbeddedResource Include="Images\Home\icon-id-card.svg" />
+    <EmbeddedResource Include="Images\Home\icon-settings.svg" />
+    <EmbeddedResource Include="Images\Home\illus_claim.svg" />
+    <EmbeddedResource Include="Images\Menu\icon-betterhealth.svg" />
+    <EmbeddedResource Include="Images\Menu\icon-chevron-up.svg" />
+    <EmbeddedResource Include="Images\Menu\icon-findcare.svg" />
+    <EmbeddedResource Include="Images\Menu\icon-insurance.svg" />
+    <EmbeddedResource Include="Images\Menu\icon-medicalfile.svg" />
+    <EmbeddedResource Include="Images\Menu\icon-rewards.svg" />
+    <EmbeddedResource Include="Images\Pharmacy\az.png" />
+    <EmbeddedResource Include="Images\Pharmacy\az_Black.png" />
+    <EmbeddedResource Include="Images\Pharmacy\date-btn.png" />
+    <EmbeddedResource Include="Images\Pharmacy\date-btn_Black.png" />
+    <EmbeddedResource Include="Images\titleImage.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+    <PackageReference Include="Plugin.Fingerprint" Version="1.4.7" />
+    <PackageReference Include="VG.XFShapeView.NetCore" Version="1.1.0" />
+    <PackageReference Include="Xam.Plugins.Forms.Svg" Version="1.0.0.27" />
+    <PackageReference Include="Xam.Plugins.Settings" Version="3.1.1" />
+    <PackageReference Include="Xamarin.Essentials" Version="0.9.1-preview" />
+    <PackageReference Include="Xamarin.Forms" Version="3.1.0.697729" />
+    <PackageReference Include="Xamarin.Forms.CarouselView" Version="2.3.0-pre2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="DoctorsListPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="DoctorsSearchPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="HospitalSearch.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="PagesIdCards\CardsListPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="PagesClaims\ClaimsListingPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="PagesClaims\ClaimSummaryPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="PagesHome\ContactPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="PagesHome\HomePage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="PagesIdCards\IdCardsPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="PagesClaims\MembersWithClaimsPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="PagesHome\MenuPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="PagesAuth\PasswordPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="PagesPharmacy\PharmacyCenterPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="PagesPharmacy\PharmacyHistoryPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="PagesAuth\PinPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="PharmacySearchPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="TermsPoliciesListPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="UCCSearchPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="YourProvidersPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+</Project>

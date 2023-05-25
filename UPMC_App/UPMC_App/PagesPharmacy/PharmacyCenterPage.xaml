@@ -1,0 +1,173 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="UPMC_App.PharmacyCenterPage"
+             xmlns:cv="clr-namespace:Xamarin.Forms;assembly=Xamarin.Forms.CarouselView"
+             xmlns:controls="clr-namespace:UPMC_App.MyControls"
+             Title="Pharmacy Center" NavigationPage.BackButtonTitle="Back">
+    <ContentPage.Content>
+        <Grid>
+            <ScrollView BackgroundColor="#FFC5D1E9">
+                <StackLayout>
+                    <!--Current prescriptions-->
+                    <Grid BackgroundColor="White" Margin="4" >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid BackgroundColor="{StaticResource GrayBackgroundColor}" Padding="4,2,4,2">
+                            <Label Text="CURRENT PRESCRIPTION" HorizontalOptions="Start" TextColor="White"/>
+                            <Label x:Name="lblSeeCurrentPrescriptions" Text="See All" HorizontalOptions="End" TextColor="White"/>
+                        </Grid>
+
+                        <cv:CarouselView Grid.Row="1" ItemsSource="{Binding FirstCurrentPrescriptions}" Position="{Binding CurrentPrescriptionsPosition, Mode=TwoWay}" HeightRequest="80">
+                            <cv:CarouselView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Padding="4,8,4,8">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition/>
+                                        </Grid.ColumnDefinitions>
+                                        <Label Text="{Binding DrugName}" Grid.RowSpan="2" FontAttributes="Bold" LineBreakMode="TailTruncation"/>
+                                        <Label Text="{Binding PrescriptionNumberString}" Grid.Row="2"/>
+                                        <Label Text="{Binding DosageString}" Grid.Column="1"/>
+                                        <Label Text="{Binding SupplyString}" Grid.Column="1" Grid.Row="1"/>
+                                        <Label Text="{Binding DateString}" Grid.Column="1" Grid.Row="2"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </cv:CarouselView.ItemTemplate>
+                        </cv:CarouselView>
+                        <Label Grid.Row="1" HorizontalOptions="Center" VerticalOptions="Center" Text="No data..." IsVisible="{Binding IsCurrentPrescriptionsEmpty}"/>
+                        <controls:CarouselIndicators Grid.Row="2" IndicatorHeight="12" IndicatorWidth="12" UnselectedIndicator="unselectedCircle.png" SelectedIndicator="selectedCircle.png"
+                                             ItemsSource="{Binding FirstCurrentPrescriptions}" Position="{Binding CurrentPrescriptionsPosition}" Margin="0,0,0,8"/>
+                    </Grid>
+
+                    <!--Pharmacist info-->
+                    <Grid BackgroundColor="White" Margin="4" >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid BackgroundColor="{StaticResource GrayBackgroundColor}" Padding="4,2,4,2">
+                            <Label Text="YOUR PHARMACIST INFORMATION" HorizontalOptions="Start" TextColor="White"/>
+                            <!--<Label Text="See All" HorizontalOptions="End" TextColor="White"/>-->
+                        </Grid>
+
+                        <cv:CarouselView Grid.Row="1" ItemsSource="{Binding FirstPharmacies}" Position="{Binding CurrentPharmaciesPosition, Mode=TwoWay}" 
+                                 BackgroundColor="White" HeightRequest="80" >
+                            <cv:CarouselView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Padding="4,8,4,8">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition/>
+                                        </Grid.ColumnDefinitions>
+                                        <StackLayout>
+                                            <Label Text="{Binding Name}" FontAttributes="Bold" LineBreakMode="TailTruncation"/>
+                                            <Label Text="{Binding AddressLine}" />
+                                            <Label Text="{Binding FullCityString}" />
+                                        </StackLayout>
+                                        <Grid Grid.Column="1" VerticalOptions="Center">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition/>
+                                                <ColumnDefinition/>
+                                                <ColumnDefinition/>
+                                            </Grid.ColumnDefinitions>
+                                            <Image Source="baseline_phone_black_36.png" HeightRequest="36" WidthRequest="36">
+                                                <Image.GestureRecognizers>
+                                                    <TapGestureRecognizer Tapped="TapPharmacyPhone_Tapped"/>
+                                                </Image.GestureRecognizers>
+                                            </Image>
+                                            <Image Source="baseline_place_black_36.png" Grid.Column="1" HeightRequest="36" WidthRequest="36" >
+                                                <Image.GestureRecognizers>
+                                                    <TapGestureRecognizer Tapped="TapPharmacyMap_Tapped"/>
+                                                </Image.GestureRecognizers>
+                                            </Image>
+                                            <Image Source="{Binding FavImage}" Grid.Column="2" HeightRequest="36" WidthRequest="36" />
+                                        </Grid>
+                                    </Grid>
+                                </DataTemplate>
+                            </cv:CarouselView.ItemTemplate>
+                        </cv:CarouselView>
+                        <Label Grid.Row="1" HorizontalOptions="Center" VerticalOptions="Center" Text="No data..." IsVisible="{Binding IsPharmaciesEmpty}"/>
+                        <controls:CarouselIndicators Grid.Row="2" IndicatorHeight="12" IndicatorWidth="12" UnselectedIndicator="unselectedCircle.png" SelectedIndicator="selectedCircle.png"
+                                             ItemsSource="{Binding FirstPharmacies}" Position="{Binding CurrentPharmaciesPosition}" Margin="0,0,0,8"/>
+                    </Grid>
+
+                    <!--Find pharmacy-->
+                    <Grid BackgroundColor="White" Margin="4" >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="100"/>
+                        </Grid.RowDefinitions>
+                        <Grid BackgroundColor="{StaticResource GrayBackgroundColor}" Padding="4,2,4,2">
+                            <Label Text="FIND A FARMACY" HorizontalOptions="Start" TextColor="White"/>
+                            <!--<Label Text="See All" HorizontalOptions="End" TextColor="White"/>-->
+                        </Grid>
+
+                        <StackLayout Grid.Row="1" HorizontalOptions="Center" VerticalOptions="Center">
+                            <StackLayout.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="PharmacySearch_Tapped"/>
+                            </StackLayout.GestureRecognizers>
+                            <Image Source="bigFind.png" HeightRequest="48" WidthRequest="48" />
+                            <Label Text="TAP TO BEGIN SEARCH"/>
+                        </StackLayout>
+
+                    </Grid>
+
+                    <!--Prescriptions history-->
+                    <Grid BackgroundColor="White" Margin="4">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid BackgroundColor="{StaticResource GrayBackgroundColor}" Padding="4,2,4,2">
+                            <Label Text="PRESCRIPTION HISTORY" HorizontalOptions="Start" TextColor="White"/>
+                            <Label x:Name="lblSeePrescriptionHistory" Text="See All" HorizontalOptions="End" TextColor="White"/>
+                        </Grid>
+
+                        <cv:CarouselView Grid.Row="1" ItemsSource="{Binding FirstPrescriptionsHistory}" Position="{Binding CurrentHistoryPosition, Mode=TwoWay}" 
+                                 BackgroundColor="White" HeightRequest="80">
+                            <cv:CarouselView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Padding="4,8,4,8">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition/>
+                                        </Grid.ColumnDefinitions>
+                                        <Label Text="{Binding DrugName}" Grid.RowSpan="2" FontAttributes="Bold" LineBreakMode="TailTruncation"/>
+                                        <Label Text="{Binding PrescriptionNumberString}" Grid.Row="2"/>
+                                        <Label Text="{Binding DosageString}" Grid.Column="1"/>
+                                        <Label Text="{Binding SupplyString}" Grid.Column="1" Grid.Row="1"/>
+                                        <Label Text="{Binding DateString}" Grid.Column="1" Grid.Row="2"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </cv:CarouselView.ItemTemplate>
+                        </cv:CarouselView>
+                        <Label Grid.Row="1" HorizontalOptions="Center" VerticalOptions="Center" Text="No data..." IsVisible="{Binding IsPrescriptionsHistoryEmpty}"/>
+                        <controls:CarouselIndicators Grid.Row="2" IndicatorHeight="12" IndicatorWidth="12" UnselectedIndicator="unselectedCircle.png" SelectedIndicator="selectedCircle.png"
+                                             ItemsSource="{Binding FirstPrescriptionsHistory}" Position="{Binding CurrentHistoryPosition}" Margin="0,0,0,8"/>
+                    </Grid>
+                </StackLayout>
+            </ScrollView>
+
+            <Grid HorizontalOptions="Fill" VerticalOptions="Fill" BackgroundColor="{StaticResource WaitingBlackColor}" IsVisible="{Binding IsProgressActive}">
+                <ActivityIndicator HorizontalOptions="Center" VerticalOptions="Center" Color="White" IsRunning="True"/>
+            </Grid>
+        </Grid>
+        
+    </ContentPage.Content>
+</ContentPage>

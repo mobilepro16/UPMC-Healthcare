@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="UPMC_App.ClaimSummaryPage"
+             xmlns:controls="clr-namespace:UPMC_App.MyControls"
+             Title="Claim Summary" Padding="10" BackgroundColor="White">
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout BindingContext="{Binding CurrentClaim}">
+                <Label Text="Claim Identification" FontSize="Medium" TextColor="{StaticResource HeaderTextColor}"/>
+                <Grid ColumnSpacing="0" RowSpacing="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    
+                    <Label Text="Provider" TextColor="{StaticResource HeaderTextColor}" Margin="10,8,0,8" VerticalOptions="Center"/>
+                    <Label Text="{Binding Provider}" Grid.Column="1" Margin="10,8,0,8" VerticalOptions="Center" />
+                    <Label Text="Date of service" TextColor="{StaticResource HeaderTextColor}" Grid.Row="1" Margin="10,8,0,8" VerticalOptions="Center"/>
+                    <Label Text="{Binding DateFriendly}" Grid.Column="1" Grid.Row="1" Margin="10,8,0,8" VerticalOptions="Center"/>
+                    <Label Text="Claim status" TextColor="{StaticResource HeaderTextColor}" Grid.Row="2" Margin="10,8,0,8" VerticalOptions="Center"/>
+                    <Label Text="{Binding ClaimStatus}" Grid.Column="1" Grid.Row="2" Margin="10,8,0,8" VerticalOptions="Center"/>
+                    <Label Text="Claim #" TextColor="{StaticResource HeaderTextColor}" Grid.Row="3" Margin="10,8,0,8" VerticalOptions="Center"/>
+                    <Label Text="{Binding ClaimNumber}" Grid.Column="1" Grid.Row="3" Margin="10,8,0,8" VerticalOptions="Center"/>
+
+                    <BoxView Color="{StaticResource HeaderTextColor}" HorizontalOptions="Fill" VerticalOptions="Start" HeightRequest="1" Grid.ColumnSpan="2" Margin="0,0,1,0"/>
+                    <BoxView Color="{StaticResource HeaderTextColor}" HorizontalOptions="Fill" VerticalOptions="End" HeightRequest="1" Grid.ColumnSpan="2" Margin="0,0,1,0"/>
+                    <BoxView Grid.Row="2" Color="{StaticResource HeaderTextColor}" HorizontalOptions="Fill" VerticalOptions="Start" HeightRequest="1" Grid.ColumnSpan="2" Margin="0,0,1,0"/>
+                    <BoxView Grid.Row="2" Color="{StaticResource HeaderTextColor}" HorizontalOptions="Fill" VerticalOptions="End" HeightRequest="1" Grid.ColumnSpan="2" Margin="0,0,1,0"/>
+                    <BoxView Grid.Row="3" Color="{StaticResource HeaderTextColor}" HorizontalOptions="Fill" VerticalOptions="End" HeightRequest="1" Grid.ColumnSpan="2" Margin="0,0,1,0"/>
+                    <BoxView Color="{StaticResource HeaderTextColor}" HorizontalOptions="Start" VerticalOptions="Fill" WidthRequest="1" Grid.RowSpan="4" Margin="0,0,0,1"/>
+                    <BoxView Color="{StaticResource HeaderTextColor}" HorizontalOptions="End" VerticalOptions="Fill" WidthRequest="1" Grid.Column="1" Grid.RowSpan="4" Margin="0,0,0,1"/>
+                </Grid>
+
+                <Label Text="Services Provided" FontSize="Medium" Margin="0,16,0,0" TextColor="{StaticResource HeaderTextColor}"/>
+                <Grid>
+                    <!--<Label Text="{Binding ServicesProvided}" Margin="10"/>-->
+                    <controls:HtmlFormattedLabel Text="{Binding ServicesProvided}" Margin="10"/>
+
+                    <BoxView Color="{StaticResource HeaderTextColor}" HorizontalOptions="Fill" VerticalOptions="Start" HeightRequest="1" Margin="0,0,1,0"/>
+                    <BoxView Color="{StaticResource HeaderTextColor}" HorizontalOptions="Fill" VerticalOptions="End" HeightRequest="1" Margin="0,0,1,0"/>
+                    <BoxView Color="{StaticResource HeaderTextColor}" HorizontalOptions="Start" VerticalOptions="Fill" WidthRequest="1" Margin="0,0,0,1"/>
+                    <BoxView Color="{StaticResource HeaderTextColor}" HorizontalOptions="End" VerticalOptions="Fill" WidthRequest="1" Margin="0,0,0,1"/>
+                </Grid>
+
+                <Label Text="Claim Costs" FontSize="Medium" Margin="0,16,0,0" TextColor="{StaticResource HeaderTextColor}"/>
+                <Grid ColumnSpacing="0" RowSpacing="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <Label Text="Provider Billed" TextColor="{StaticResource HeaderTextColor}" Margin="10,8,0,8" VerticalOptions="Center"/>
+                    <Label Text="{Binding ProviderBilled}" Grid.Column="1" Margin="10,8,0,8" VerticalOptions="Center"/>
+                    <Label Text="Amount Allowed" TextColor="{StaticResource HeaderTextColor}" Grid.Row="1" Margin="10,8,0,8" VerticalOptions="Center"/>
+                    <Label Text="{Binding AmountAllowed}" Grid.Column="1" Grid.Row="1" Margin="10,8,0,8" VerticalOptions="Center"/>
+                    <Label Text="Network Discount" TextColor="{StaticResource HeaderTextColor}" Grid.Row="2" Margin="10,8,0,8" VerticalOptions="Center"/>
+                    <Label Text="{Binding NetworkDiscount}" Grid.Column="1" Grid.Row="2" Margin="10,8,0,8" VerticalOptions="Center"/>
+                    <Label Text="Amount Denied" TextColor="{StaticResource HeaderTextColor}" Grid.Row="3" Margin="10,8,0,8" VerticalOptions="Center"/>
+                    <Label Text="{Binding AmountDenied}" Grid.Column="1" Grid.Row="3" Margin="10,8,0,8" VerticalOptions="Center"/>
+
+                    <BoxView Color="{StaticResource HeaderTextColor}" HorizontalOptions="Fill" VerticalOptions="Start" HeightRequest="1" Grid.ColumnSpan="2" Margin="0,0,1,0"/>
+                    <BoxView Color="{StaticResource HeaderTextColor}" HorizontalOptions="Fill" VerticalOptions="End" HeightRequest="1" Grid.ColumnSpan="2" Margin="0,0,1,0"/>
+                    <BoxView Grid.Row="2" Color="{StaticResource HeaderTextColor}" HorizontalOptions="Fill" VerticalOptions="Start" HeightRequest="1" Grid.ColumnSpan="2" Margin="0,0,1,0"/>
+                    <BoxView Grid.Row="2" Color="{StaticResource HeaderTextColor}" HorizontalOptions="Fill" VerticalOptions="End" HeightRequest="1" Grid.ColumnSpan="2" Margin="0,0,1,0"/>
+                    <BoxView Grid.Row="3" Color="{StaticResource HeaderTextColor}" HorizontalOptions="Fill" VerticalOptions="End" HeightRequest="1" Grid.ColumnSpan="2" Margin="0,0,1,0"/>
+                    <BoxView Color="{StaticResource HeaderTextColor}" HorizontalOptions="Start" VerticalOptions="Fill" WidthRequest="1" Grid.RowSpan="4" Margin="0,0,0,1"/>
+                    <BoxView Color="{StaticResource HeaderTextColor}" HorizontalOptions="End" VerticalOptions="Fill" WidthRequest="1" Grid.Column="1" Grid.RowSpan="4" Margin="0,0,0,1"/>
+                </Grid>
+
+                <Label Text="Member Responsibility" FontSize="Medium" Margin="0,16,0,0" TextColor="{StaticResource HeaderTextColor}"/>
+                <Grid ColumnSpacing="0" RowSpacing="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <Label Text="Co-Payment" TextColor="{StaticResource HeaderTextColor}" Margin="10,8,0,8" VerticalOptions="Center"/>
+                    <Label Text="{Binding CoPayment}" Grid.Column="1" Margin="10,8,0,8" VerticalOptions="Center"/>
+                    <Label Text="Deductible" TextColor="{StaticResource HeaderTextColor}" Grid.Row="1" Margin="10,8,0,8" VerticalOptions="Center"/>
+                    <Label Text="{Binding Deductible}" Grid.Column="1" Grid.Row="1" Margin="10,8,0,8" VerticalOptions="Center"/>
+                    <Label Text="Co-Insurance" TextColor="{StaticResource HeaderTextColor}" Grid.Row="2" Margin="10,8,0,8" VerticalOptions="Center"/>
+                    <Label Text="{Binding CoInsurance}" Grid.Column="1" Grid.Row="2" Margin="10,8,0,8" VerticalOptions="Center"/>
+                    <Label Text="Total Responsibility" TextColor="#5389C7"  Grid.Row="3" Margin="10,8,0,8" VerticalOptions="Center"/>
+                    <Label Text="{Binding TotalResponsibility}" TextColor="#5389C7" Grid.Column="1" Grid.Row="3" Margin="10,8,0,8" VerticalOptions="Center"/>
+
+                    <BoxView Color="{StaticResource HeaderTextColor}" HorizontalOptions="Fill" VerticalOptions="Start" HeightRequest="1" Grid.ColumnSpan="2" Margin="0,0,1,0"/>
+                    <BoxView Color="{StaticResource HeaderTextColor}" HorizontalOptions="Fill" VerticalOptions="End" HeightRequest="1" Grid.ColumnSpan="2" Margin="0,0,1,0"/>
+                    <BoxView Grid.Row="2" Color="{StaticResource HeaderTextColor}" HorizontalOptions="Fill" VerticalOptions="Start" HeightRequest="1" Grid.ColumnSpan="2" Margin="0,0,1,0"/>
+                    <BoxView Grid.Row="2" Color="{StaticResource HeaderTextColor}" HorizontalOptions="Fill" VerticalOptions="End" HeightRequest="1" Grid.ColumnSpan="2" Margin="0,0,1,0"/>
+                    <BoxView Grid.Row="3" Color="{StaticResource HeaderTextColor}" HorizontalOptions="Fill" VerticalOptions="End" HeightRequest="1" Grid.ColumnSpan="2" Margin="0,0,1,0"/>
+                    <BoxView Color="{StaticResource HeaderTextColor}" HorizontalOptions="Start" VerticalOptions="Fill" WidthRequest="1" Grid.RowSpan="4" Margin="0,0,0,1"/>
+                    <BoxView Color="{StaticResource HeaderTextColor}" HorizontalOptions="End" VerticalOptions="Fill" WidthRequest="1" Grid.Column="1" Grid.RowSpan="4" Margin="0,0,0,1"/>
+                </Grid>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

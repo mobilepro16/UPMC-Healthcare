@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:UPMC_App"
+             xmlns:converters="clr-namespace:UPMC_App.Converters"
+             xmlns:shapes="clr-namespace:XFShapeView;assembly=XFShapeView"
+             x:Class="UPMC_App.PinPage"
+             SizeChanged="Page_SizeChanged">
+    <ContentPage.Resources>
+        <converters:PinLenghtToColorConverter x:Key="PinLenghtToColorConverter"/>
+    </ContentPage.Resources>
+
+    <Grid>
+        <StackLayout>
+            <Image Source="{local:ImageResource UPMC_App.Images.titleImage.png}"/>
+            <Image Source="{local:ImageResource UPMC_App.Images.hp_logo_big.png}" Margin="45,20,45,20" />
+            <Label Text="Log In With Your PIN" FontFamily="{StaticResource TitleFont}" 
+           HorizontalOptions="Center" FontSize="Medium"  TextColor="DimGray" />
+            <StackLayout HorizontalOptions="Center" Orientation="Horizontal" >
+                <shapes:ShapeView BorderWidth="1" BorderColor="DimGray" ShapeType="Circle" Margin="5"
+                              HorizontalOptions="Center" CornerRadius="5" HeightRequest="15" WidthRequest="15"
+                              Color="{Binding PinLenght, Converter={StaticResource PinLenghtToColorConverter}, ConverterParameter=1}"/>
+                <shapes:ShapeView BorderWidth="1" BorderColor="DimGray" ShapeType="Circle" Margin="5"
+                              HorizontalOptions="Center" CornerRadius="5" HeightRequest="15" WidthRequest="15"
+                              Color="{Binding PinLenght, Converter={StaticResource PinLenghtToColorConverter}, ConverterParameter=2}"/>
+                <shapes:ShapeView BorderWidth="1" BorderColor="DimGray" ShapeType="Circle" Margin="5"
+                              HorizontalOptions="Center" CornerRadius="5" HeightRequest="15" WidthRequest="15"
+                              Color="{Binding PinLenght, Converter={StaticResource PinLenghtToColorConverter}, ConverterParameter=3}"/>
+                <shapes:ShapeView BorderWidth="1" BorderColor="DimGray" ShapeType="Circle" Margin="5"
+                              HorizontalOptions="Center" CornerRadius="5" HeightRequest="15" WidthRequest="15"
+                              Color="{Binding PinLenght, Converter={StaticResource PinLenghtToColorConverter}, ConverterParameter=4}"/>
+            </StackLayout>
+            <Label x:Name="lblPinStatus" Text="{Binding PinResultText}" TextColor="{Binding PinResultColor}" HorizontalOptions="Center" />
+
+            <Grid HeightRequest="280" WidthRequest="240" HorizontalOptions="Center"  
+              ColumnSpacing="0" RowSpacing="0" VerticalOptions="Start">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0" Grid.Row="0" BorderRadius="30" Margin="10,5,10,5" BorderWidth="2" 
+                 BorderColor="DimGray" BackgroundColor="White" TextColor="DimGray" FontSize="Large" 
+                 Text="1" Clicked="BtnNum_Clicked"/>
+                <Button Grid.Column="1" Grid.Row="0" BorderRadius="30" Margin="10,5,10,5" BorderWidth="2" 
+                 BorderColor="DimGray" BackgroundColor="White" TextColor="DimGray" FontSize="Large" 
+                 Text="2" Clicked="BtnNum_Clicked"/>
+                <Button Grid.Column="2" Grid.Row="0" BorderRadius="30" Margin="10,5,10,5" BorderWidth="2" 
+                 BorderColor="DimGray" BackgroundColor="White" TextColor="DimGray" FontSize="Large" 
+                 Text="3" Clicked="BtnNum_Clicked"/>
+
+                <Button Grid.Column="0" Grid.Row="1" BorderRadius="30" Margin="10,5,10,5" BorderWidth="2" 
+                 BorderColor="DimGray" BackgroundColor="White" TextColor="DimGray" FontSize="Large" 
+                 Text="4" Clicked="BtnNum_Clicked"/>
+                <Button Grid.Column="1" Grid.Row="1" BorderRadius="30" Margin="10,5,10,5" BorderWidth="2" 
+                 BorderColor="DimGray" BackgroundColor="White" TextColor="DimGray" FontSize="Large" 
+                 Text="5" Clicked="BtnNum_Clicked"/>
+                <Button Grid.Column="2" Grid.Row="1" BorderRadius="30" Margin="10,5,10,5" BorderWidth="2" 
+                 BorderColor="DimGray" BackgroundColor="White" TextColor="DimGray" FontSize="Large" 
+                 Text="6" Clicked="BtnNum_Clicked"/>
+
+                <Button Grid.Column="0" Grid.Row="2" BorderRadius="30" Margin="10,5,10,5" BorderWidth="2" 
+                 BorderColor="DimGray" BackgroundColor="White" TextColor="DimGray" FontSize="Large" 
+                 Text="7" Clicked="BtnNum_Clicked"/>
+                <Button Grid.Column="1" Grid.Row="2" BorderRadius="30" Margin="10,5,10,5" BorderWidth="2" 
+                 BorderColor="DimGray" BackgroundColor="White" TextColor="DimGray" FontSize="Large" 
+                 Text="8" Clicked="BtnNum_Clicked"/>
+                <Button Grid.Column="2" Grid.Row="2" BorderRadius="30" Margin="10,5,10,5" BorderWidth="2" 
+                 BorderColor="DimGray" BackgroundColor="White" TextColor="DimGray" FontSize="Large" 
+                 Text="9" Clicked="BtnNum_Clicked"/>
+
+                <Label Grid.Column="0" Grid.Row="3" x:Name="lblUsePassword" LineBreakMode="WordWrap" HorizontalTextAlignment="Center"
+                   HorizontalOptions="Center" VerticalOptions="Center" Text="Use Password"
+                   FontAttributes="Bold" TextColor="{StaticResource MainAccentColor}"/>
+                <Button Grid.Column="1" Grid.Row="3" BorderRadius="30" Margin="10,5,10,5" BorderWidth="2" 
+                 BorderColor="DimGray" BackgroundColor="White" TextColor="DimGray" FontSize="Large" 
+                 Text="0" Clicked="BtnNum_Clicked"/>
+                <!--<Button Grid.Column="2" Grid.Row="3" BorderRadius="35" Margin="15" 
+                 BorderColor="DimGray" BackgroundColor="Transparent" TextColor="DimGray" FontSize="Large" 
+                 Text="" Clicked="BtnNum_Clicked">
+            </Button>-->
+                <Image Grid.Column="2" Grid.Row="3" Margin="15,10,15,10" x:Name="imgFinger"
+                   Source="{local:ImageResource UPMC_App.Images.fingerImage.png}"/>
+            </Grid>
+
+            
+        </StackLayout>
+
+        <Label x:Name="lblTermsPolicies" Text="Terms, Policies &amp; Nondiscrimination Notice" TextColor="DarkGray"
+           HorizontalOptions="Center" VerticalOptions="End" Margin="0,0,0,10">
+            <Label.GestureRecognizers>
+                <TapGestureRecognizer Tapped="LblTerms_Tapped"/>
+            </Label.GestureRecognizers>
+        </Label>
+
+        <Grid HorizontalOptions="Fill" VerticalOptions="Fill" BackgroundColor="{StaticResource WaitingBlackColor}" IsVisible="{Binding IsProgressActive}">
+            <ActivityIndicator HorizontalOptions="Center" VerticalOptions="Center" Color="White" IsRunning="True"/>
+        </Grid>
+    </Grid>
+    
+</ContentPage>

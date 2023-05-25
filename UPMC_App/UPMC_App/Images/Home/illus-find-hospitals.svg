@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="63" height="62" viewBox="0 0 63 62">
+    <g fill="none" fill-rule="evenodd">
+        <ellipse cx="31.5" cy="31" fill="#EDA762" rx="31.5" ry="31"/>
+        <g transform="translate(13.353 13.64)">
+            <path fill="#EDEDEE" d="M.143 18.437v13.997a1 1 0 0 0 1 1h34.18a1 1 0 0 0 1-1V5.776h-3.056v1.386h-5.52V1.235a1 1 0 0 0-1-1H9.424a1 1 0 0 0-1 1v5.927H3.2V5.777H.143v12.66z"/>
+            <path fill="#893F2C" d="M13.945 23.787h8.384v9.647h-8.384z"/>
+            <rect width="7.391" height="4.926" x="2.904" y="23.787" fill="#7DC4C9" rx=".5"/>
+            <rect width="7.391" height="4.926" x="26.367" y="23.787" fill="#7DC4C9" rx=".5"/>
+            <rect width="7.391" height="4.926" x="2.904" y="16.86" fill="#7DC4C9" rx=".5"/>
+            <rect width="7.391" height="4.926" x="26.367" y="16.86" fill="#7DC4C9" rx=".5"/>
+            <rect width="8.384" height="4.926" x="13.945" y="16.86" fill="#7DC4C9" rx=".5"/>
+            <rect width="7.391" height="4.926" x="2.904" y="9.933" fill="#7DC4C9" rx=".5"/>
+            <rect width="7.391" height="4.926" x="26.367" y="9.933" fill="#7DC4C9" rx=".5"/>
+            <path fill="#D14124" d="M17.291 1.62H19V7h-1.709z"/>
+            <path fill="#D14124" d="M20.846 3.495V5.22h-5.52V3.495z"/>
+            <rect width="8.384" height="4.926" x="13.945" y="9.933" fill="#7DC4C9" rx=".5"/>
+        </g>
+    </g>
+</svg>

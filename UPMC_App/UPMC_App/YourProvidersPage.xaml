@@ -1,0 +1,143 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="UPMC_App.YourProvidersPage"
+             xmlns:converters="clr-namespace:UPMC_App.Converters"
+             x:Name="providersPage"
+             Title="Your Providers" NavigationPage.BackButtonTitle="Back" Padding="10" BackgroundColor="White">
+    
+    <ContentPage.Resources>
+        <converters:BoolToColorConverter x:Key="BoolToColorConverter" FalseColor="{StaticResource GrayTextColor}" TrueColor="{StaticResource MainAccentColor}"/>
+        <converters:BoolToColorConverter x:Key="BoolToTextColorConverter" FalseColor="Black" TrueColor="White"/>
+
+        <converters:YourProvidersItemTemplateSelector x:Key="YourProvidersItemTemplateSelector">
+            <converters:YourProvidersItemTemplateSelector.ProviderDataTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Grid Padding="10,8,10,8">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="45"/>
+                                <ColumnDefinition Width="45"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid HeightRequest="18">
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="ItemDelete_Tapped"/>
+                                </Grid.GestureRecognizers>
+                                <Image Source="delete_icon.png" IsVisible="{Binding IsEditEnabled}" VerticalOptions="Center" Margin="4,0,4,0"
+                                   BindingContext="{Binding Path=BindingContext, Source={x:Reference providersPage}}" HeightRequest="18" WidthRequest="18"/>
+                            </Grid>
+                            
+                            <StackLayout Grid.Column="1" VerticalOptions="Center">
+                                <Label Text="{Binding ProviderName}" FontSize="Medium" TextColor="Black"/>
+                                <Label Text="{Binding Specialty}"/>
+                            </StackLayout>
+                            <StackLayout Grid.Column="2" VerticalOptions="Center">
+                                <StackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="VisitHistory_Tapped"/>
+                                </StackLayout.GestureRecognizers>
+                                <Image Source="{Binding ImgVisitHistory}" HeightRequest="18" WidthRequest="18"/>
+                                <Label Text="Visit&#10;History" HorizontalTextAlignment="Center" TextColor="{Binding IsVisitHistoryEnabled, Converter={StaticResource BoolToColorConverter}}"/>
+                            </StackLayout>
+                            <StackLayout Grid.Column="3" VerticalOptions="Center">
+                                <Image Source="{Binding ImgOfficeInfo}" HeightRequest="18" WidthRequest="18"/>
+                                <Label Text="Office&#10;Info" HorizontalTextAlignment="Center" TextColor="{Binding IsOfficeInfoEnabled, Converter={StaticResource BoolToColorConverter}}"/>
+                            </StackLayout>
+                            <Grid Grid.Column="1" Margin="-10,0,0,-8" VerticalOptions="End" HorizontalOptions="Start" BackgroundColor="{StaticResource GrayBackgroundColor}" 
+                                      IsVisible="{Binding IsVisitHistoryEnabled, Converter={StaticResource BoolToNegateBoolConverter}}">
+                                <Label Text="{Binding AddedBy}" TextColor="White" FontSize="Micro"  FontAttributes="Bold" Margin="5,0,5,0"/>
+                            </Grid>
+                            <BoxView Grid.ColumnSpan="4" Margin="-10,0,-10,-8" Color="{StaticResource GrayTextColor}" HeightRequest="2" HorizontalOptions="Fill" VerticalOptions="End"/>
+                        </Grid>
+                    </ViewCell>
+                </DataTemplate>
+            </converters:YourProvidersItemTemplateSelector.ProviderDataTemplate>
+            <converters:YourProvidersItemTemplateSelector.ButtonDataTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Button HorizontalOptions="Fill" Text="+ADD PROVIDER" FontSize="Medium" Margin="10" 
+                        BackgroundColor="{StaticResource MainAccentColor}" TextColor="White" 
+                        Clicked="BtnAddProvider_Click"/>
+                    </ViewCell>
+                </DataTemplate>
+            </converters:YourProvidersItemTemplateSelector.ButtonDataTemplate>
+            <converters:YourProvidersItemTemplateSelector.FrameDataTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Frame BackgroundColor="{StaticResource myBackgroundColor}" Padding="10" Margin="5,5,5,15">
+                            <StackLayout>
+                                <Label Text="How did these providers get on my list?" TextColor="Black" FontSize="Medium"/>
+                                <Label Margin="0,6,0,0" Text="When UMPC Health Plan receives a claim from a provider for care you received, we add that provider to this list."/>
+                                <Label Margin="0,6,0,0" Text="Is there someone listed whose name you do not recognize? Sometimes provider offices do not list the physician you saw on a claim, but instead include a different  physician's name from the practice. To remove providers from your list, use the Edit button to delete a provider."/>
+                            </StackLayout>
+                        </Frame>
+                    </ViewCell>
+                </DataTemplate>
+            </converters:YourProvidersItemTemplateSelector.FrameDataTemplate>
+        </converters:YourProvidersItemTemplateSelector>
+    </ContentPage.Resources>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Order="Primary" Icon="outline_edit_white_48.png" Clicked="EditMode_Clicked" />
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <Grid >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <!--<RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>-->
+            </Grid.RowDefinitions>
+            <Label Text="Sort by:"/>
+            <Grid Grid.Row="1" HeightRequest="40">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid BackgroundColor="{Binding IsSortLastVisit, Converter={StaticResource BoolToColorConverter}}">
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="LastVisit_Tapped"/>
+                    </Grid.GestureRecognizers>
+                    <Label Text="Last Visit" TextColor="{Binding IsSortLastVisit, Converter={StaticResource BoolToTextColorConverter}}"
+                           VerticalOptions="Center" HorizontalOptions="Center"/>
+                </Grid>
+                <Grid Grid.Column="1" BackgroundColor="{Binding IsSortName, Converter={StaticResource BoolToColorConverter}}">
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="Name_Tapped"/>
+                    </Grid.GestureRecognizers>
+                    <Label Text="Name" TextColor="{Binding IsSortName, Converter={StaticResource BoolToTextColorConverter}}"
+                           VerticalOptions="Center" HorizontalOptions="Center"/>
+                </Grid>
+                <Grid Grid.Column="2" BackgroundColor="{Binding IsSortSpecialty, Converter={StaticResource BoolToColorConverter}}">
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="Specialty_Tapped"/>
+                    </Grid.GestureRecognizers>
+                    <Label Text="Specialty" TextColor="{Binding IsSortSpecialty, Converter={StaticResource BoolToTextColorConverter}}"
+                           VerticalOptions="Center" HorizontalOptions="Center"/>
+                </Grid>
+            </Grid>
+            <Label Grid.Row="2" Text="Providers You Have Seen" FontSize="Medium" FontAttributes="Bold" TextColor="Black" Margin="0,4,0,0"/>
+            <ListView Grid.Row="3" ItemsSource="{Binding ProvidersList}" HasUnevenRows="True" SeparatorVisibility="None" SelectionMode="None"
+                      ItemTemplate="{StaticResource YourProvidersItemTemplateSelector}" Margin="-10,0,-10,0">
+            </ListView>
+            <!--<Button Grid.Row="4" HorizontalOptions="Fill" Text="+ADD PROVIDER" FontSize="Medium" Margin="0,5,0,5" 
+                        BackgroundColor="{StaticResource MainAccentColor}" TextColor="White" 
+                        Clicked="BtnAddProvider_Click"/>
+            <Frame Grid.Row="5" BackgroundColor="{StaticResource myBackgroundColor}" Padding="10" Margin="-5,10,-5,10">
+                <StackLayout>
+                    <Label Text="How did these providers get on my list?" TextColor="Black" FontSize="Medium"/>
+                    <Label Margin="0,6,0,0" Text="When UMPC Health Plan receives a claim from a provider for care you received, we add that provider to this list."/>
+                    <Label Margin="0,6,0,0" Text="Is there someone listed whose name you do not recognize? Sometimes provider offices do not list the physician you saw on a claim, but instead include a different  physician's name from the practice. To remove providers from your list, use the Edit button to delete a provider."/>
+                </StackLayout>
+            </Frame>-->
+
+            <Grid Grid.RowSpan="4" HorizontalOptions="Fill" VerticalOptions="Fill" BackgroundColor="{StaticResource WaitingBlackColor}" IsVisible="{Binding IsProgressActive}" Margin="-10">
+                <ActivityIndicator HorizontalOptions="Center" VerticalOptions="Center" Color="White" IsRunning="True"/>
+            </Grid>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

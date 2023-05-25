@@ -1,0 +1,119 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:UPMC_App"
+             xmlns:converters="clr-namespace:UPMC_App.Converters"
+             x:Class="UPMC_App.PharmacyHistoryPage"
+             Title="{Binding HistoryPageTitle}">
+    <ContentPage.Resources>
+        <converters:BoolToNegateBoolConverter x:Key="BoolToNegateBoolConverter"/>
+        <converters:BoolToWhiteColorConverter x:Key="BoolToWhiteColorConverter"/>
+        <converters:NotBoolToWhiteColorConverter x:Key="NotBoolToWhiteColorConverter"/>
+    </ContentPage.Resources>
+    
+    <ContentPage.Content>
+        <Grid RowSpacing="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid Padding="10,0,0,0" ColumnSpacing="0" BackgroundColor="{StaticResource HeaderTextColor}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="54"/>
+                    <ColumnDefinition Width="54"/>
+                </Grid.ColumnDefinitions>
+                <Label Text="{Binding HistoryResultsTitle}" FontSize="Medium" Margin="0,15,0,15" TextColor="White"/>
+                <Grid x:Name="gridSortDate" Grid.Column="1" BackgroundColor="{Binding IsSortByDate, Converter={StaticResource BoolToWhiteColorConverter}}">
+                    <Image HeightRequest="40" VerticalOptions="Center" HorizontalOptions="Center" Source="{local:ImageResource UPMC_App.Images.Pharmacy.date-btn.png}" 
+                           IsVisible="{Binding IsSortByDate, Converter={StaticResource BoolToNegateBoolConverter}}"/>
+                    <Image HeightRequest="40" VerticalOptions="Center" HorizontalOptions="Center" Source="{local:ImageResource UPMC_App.Images.Pharmacy.date-btn_Black.png}"
+                           IsVisible="{Binding IsSortByDate}"/>
+                </Grid>
+                <Grid x:Name="gridSortAlphabet" Grid.Column="2" BackgroundColor="{Binding IsSortByDate, Converter={StaticResource NotBoolToWhiteColorConverter}}">
+                    <Image HeightRequest="40" VerticalOptions="Center" HorizontalOptions="Center" Source="{local:ImageResource UPMC_App.Images.Pharmacy.az.png}" 
+                           IsVisible="{Binding IsSortByDate}"/>
+                    <Image HeightRequest="40" VerticalOptions="Center" HorizontalOptions="Center" Source="{local:ImageResource UPMC_App.Images.Pharmacy.az_Black.png}" 
+                           IsVisible="{Binding IsSortByDate, Converter={StaticResource BoolToNegateBoolConverter}}"/>
+                </Grid>
+            </Grid>
+
+            <Grid Grid.Row="1" Padding="10,4,10,4" BackgroundColor="{StaticResource myBackgroundColor}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="45"/>
+                    <ColumnDefinition Width="100"/>
+                </Grid.ColumnDefinitions>
+                <Label Text="DRUG NAME" FontSize="Micro" FontAttributes="Bold"/>
+                <Label Grid.Column="1" Text="COUNT" HorizontalOptions="Center" FontSize="Micro" FontAttributes="Bold"/>
+                <Label Grid.Column="2" Text="LAST DATE REFILL" FontSize="Micro" FontAttributes="Bold"/>
+            </Grid>
+
+            <ListView Grid.Row="2" ItemsSource="{Binding DetailsList}" HasUnevenRows="True" SelectionMode="None" 
+                      SeparatorVisibility="None" SeparatorColor="Transparent"
+                      ItemTapped="lstDetails_ItemTapped">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid Padding="10,8,10,8">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="45"/>
+                                    <ColumnDefinition Width="100"/>
+                                </Grid.ColumnDefinitions>
+                                <Label Text="{Binding DrugName}" FontSize="Medium" />
+                                <Label Grid.Column="1" Text="{Binding Supply}" HorizontalOptions="Center" FontSize="Medium"/>
+                                <Label Grid.Column="2" Text="{Binding DateFriendly}" FontSize="Medium"/>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <!--<Button Text="Test" Grid.Row="2" Clicked="Button_Clicked"/>-->
+
+            <Grid x:Name="gridPopupTable" Grid.RowSpan="3" BackgroundColor="{StaticResource WaitingBlackColor}" IsVisible="False">
+                <Grid x:Name="gridPopupSubGrid" Margin="20,40,20,40" BackgroundColor="White" RowSpacing="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid BackgroundColor="{StaticResource HeaderTextColor}">
+                        <Label Text="{Binding CurrentDrugHistoryTitle}" FontSize="Medium" Margin="10,5,0,5" TextColor="White"/>
+                    </Grid>
+                    <Grid Grid.Row="1" Padding="4,4,10,4" BackgroundColor="{StaticResource myBackgroundColor}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="45"/>
+                            <ColumnDefinition Width="95"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Text="DRUG NAME" FontSize="Micro" FontAttributes="Bold"/>
+                        <Label Grid.Column="1" Text="COUNT" HorizontalOptions="Center" FontSize="Micro" FontAttributes="Bold"/>
+                        <Label Grid.Column="2" Text="LAST DATE REFILL" FontSize="Micro" FontAttributes="Bold"/>
+                    </Grid>
+
+                    <ListView Grid.Row="2" ItemsSource="{Binding CurrentDrugList}" HasUnevenRows="True" SelectionMode="None" 
+                      ItemTapped="lstDetails_ItemTapped">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <Grid Padding="10,8,10,8">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="45"/>
+                                            <ColumnDefinition Width="95"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Label Text="{Binding DrugName}" LineBreakMode="TailTruncation"/>
+                                        <Label Grid.Column="1" Text="{Binding Supply}" HorizontalOptions="Center"/>
+                                        <Label Grid.Column="2" Text="{Binding DateFriendly}"/>
+                                    </Grid>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Grid>
+            </Grid>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

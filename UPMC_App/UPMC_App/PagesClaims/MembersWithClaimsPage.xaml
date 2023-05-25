@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="UPMC_App.MembersWithClaimsPage"
+             Title="Members With Claims" NavigationPage.BackButtonTitle="Back" >
+    <ContentPage.Content>
+        <Grid BackgroundColor="White" Padding="0,10,0,10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <ListView ItemsSource="{Binding CoveredMembers}" SelectionMode="None" HasUnevenRows="True" ItemTapped="ListView_ItemTapped" BackgroundColor="White">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <!--<TextCell Text="{Binding Name}" Detail="{Binding Type}" TextColor="{StaticResource HeaderTextColor}"/>-->
+                        <ViewCell>
+                            <Grid Padding="10,8,10,8">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <Label Text="{Binding Name}" FontSize="Medium" FontAttributes="Bold" TextColor="Black"/>
+                                <Label Text="{Binding Type}" Grid.Row="1"/>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <Frame Margin="10" Padding="10" Grid.Row="1">
+                <StackLayout>
+                    <Label Text="Why a covered member may not be listed here:"/>
+                    <Label Text="(a) The covered member does not have any processed claims since the coverage start date 1/1/2017."/>
+                    <Label Text="(b) Privacy regulations prohibit UPMC Health Plan from showing the claims of a spouse and of any dependents over the age of 13."/>
+                    <Label Text="(c) Regulations prohibit UPMC for You from showing the claims of all dependents."/>
+                </StackLayout>
+            </Frame>
+
+            <Grid Grid.RowSpan="2" HorizontalOptions="Fill" VerticalOptions="Fill" BackgroundColor="{StaticResource WaitingBlackColor}" IsVisible="{Binding IsProgressActive}" Margin="0,-10,0,-10">
+                <ActivityIndicator HorizontalOptions="Center" VerticalOptions="Center" Color="White" IsRunning="True"/>
+            </Grid>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

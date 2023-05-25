@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="UPMC_App.IdCardsPage"
+             Padding="10" Title="ID Cards">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Order="Primary" Icon="baseline_360_white_48.png" Clicked="returnImage_Clicked" />
+        <ToolbarItem Order="Primary" Icon="baseline_send_white_48.png" Clicked="sendCard_Clicked" />
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid x:Name="gridImageContainer" SizeChanged="gridImageContainer_SizeChanged">
+                <Image x:Name="img" Source="{Binding CurrentCardImage}" PropertyChanged="cardImg_PropertyChanged"
+                   HorizontalOptions="Center" VerticalOptions="Center" SizeChanged="cardImg_SizeChanged"/>
+            </Grid>
+            
+            <Grid x:Name="gridCardData" HorizontalOptions="Center" VerticalOptions="Center"/>
+
+
+            <Button Grid.Row="1" HorizontalOptions="Fill" Text="Show other cards" Clicked="btnShowCards_Clicked" 
+                    BackgroundColor="{StaticResource MainAccentColor}" TextColor="White"/>
+
+            <Grid x:Name="gridWaiting" Grid.RowSpan="2" HorizontalOptions="Fill" VerticalOptions="Fill" BackgroundColor="{StaticResource WaitingBlackColor}" IsVisible="False" Margin="-10">
+                <ActivityIndicator HorizontalOptions="Center" VerticalOptions="Center" Color="White" IsRunning="True"/>
+            </Grid>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

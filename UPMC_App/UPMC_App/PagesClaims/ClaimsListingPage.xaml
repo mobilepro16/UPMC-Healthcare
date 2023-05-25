@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="UPMC_App.ClaimsListingPage"
+             Title="Claims Listing" NavigationPage.BackButtonTitle="Back" >
+    <ContentPage.Content>
+        <Grid BackgroundColor="White" Padding="0,10,0,10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <ListView ItemsSource="{Binding ClaimsList}" SelectionMode="None" HasUnevenRows="True" ItemTapped="ListView_ItemTapped" >
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <!--<TextCell Text="{Binding Facility}" Detail="{Binding DateFriendly}" TextColor="{StaticResource HeaderTextColor}"/>-->
+                        <ViewCell>
+                            <Grid Padding="10,8,10,8">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <Label Text="{Binding Facility}" FontSize="Medium" FontAttributes="Bold" TextColor="Black"/>
+                                <Label Text="{Binding DateFriendly}" Grid.Row="1"/>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+
+            <Grid HorizontalOptions="Fill" VerticalOptions="Fill" BackgroundColor="{StaticResource WaitingBlackColor}" IsVisible="{Binding IsProgressActive}" Margin="0,-10,0,-10">
+                <ActivityIndicator HorizontalOptions="Center" VerticalOptions="Center" Color="White" IsRunning="True"/>
+            </Grid>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

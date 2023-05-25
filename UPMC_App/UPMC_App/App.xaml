@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Application xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:converters="clr-namespace:UPMC_App.Converters"
+             x:Class="UPMC_App.App">
+    <Application.Resources>
+        <Color x:Key="myBackgroundColor">#E6E6E6</Color>
+        <Color x:Key="GrayTextColor">#B3B6B8</Color>
+        <Color x:Key="NavBarBackgroundColor">#F6F6F6</Color>
+        <Color x:Key="MainAccentColor">#761B60</Color>
+        <Color x:Key="HeaderTextColor">#333333</Color>
+        <Color x:Key="GrayBackgroundColor">#666D70</Color>
+        <Color x:Key="WaitingBlackColor">#88000000</Color>
+        <Color x:Key="DisabledTextColor">#808080</Color>
+        <Color x:Key="GreenButtonColor">#8DC26A</Color>
+
+        <converters:BoolToNegateBoolConverter x:Key="BoolToNegateBoolConverter"/>
+        <converters:StringToBoolConverter x:Key="StringToBoolConverter"/>
+
+        <OnPlatform x:TypeArguments="x:String" x:Key="TitleFont">
+            <On Platform="Android" Value="GothamBook.ttf#GothamBook" />
+            <On Platform="iOS" Value="GothamBook" />
+        </OnPlatform>
+    </Application.Resources>
+</Application>

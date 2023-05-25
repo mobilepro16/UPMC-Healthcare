@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:UPMC_App"
+             x:Class="UPMC_App.MainPage" 
+            BarBackgroundColor="{StaticResource NavBarBackgroundColor}" 
+            BackgroundColor="{StaticResource myBackgroundColor}" CurrentPageChanged="Children_CurrentPageChanged"
+            SizeChanged="MainPage_SizeChanged">
+
+    <!--<TabbedPage.Children>
+        <local:HomePage Title="Home" Icon="baseline_home_black_48.png"/>
+        <local:MenuPage Title="Menu" Icon="baseline_menu_black_48.png"/>
+        <local:ContactPage Title="Contact" Icon="baseline_forum_black_48.png"/>
+    </TabbedPage.Children>-->
+        
+
+</TabbedPage>
